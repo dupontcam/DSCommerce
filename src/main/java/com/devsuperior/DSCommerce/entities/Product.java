@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_product")
-public class Produt {
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,12 @@ public class Produt {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    public Produt() {
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+
+    public Product() {
     }
-    public Produt(Long id, String name, String description, Double price, String imgUrl, Set<Category> categories) {
+    public Product(Long id, String name, String description, Double price, String imgUrl, Set<Category> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
