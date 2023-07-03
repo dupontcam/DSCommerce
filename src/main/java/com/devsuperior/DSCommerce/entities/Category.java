@@ -21,6 +21,7 @@ public class Category {
 
     public Category() {
     }
+    
     public Category(Long id, String name, Set<Product> products) {
         this.id = id;
         this.name = name;
