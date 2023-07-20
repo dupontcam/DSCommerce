@@ -12,6 +12,7 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "tb_user")
 public class User implements UserDetails{
