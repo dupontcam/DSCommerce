@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.DSCommerce.dto.CategoryDTO;
-import com.devsuperior.DSCommerce.dto.ProductDto;
+import com.devsuperior.DSCommerce.dto.ProductDTO;
 import com.devsuperior.DSCommerce.dto.ProductMinDto;
 import com.devsuperior.DSCommerce.entities.Category;
 import com.devsuperior.DSCommerce.entities.Product;
@@ -26,10 +26,10 @@ public class ProductService {
     private ProductRepository repository;
     
     @Transactional(readOnly = true)
-    public ProductDto finById(Long id){
+    public ProductDTO finById(Long id){
         Product product = repository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recurso não encontrado"));
-        return new ProductDto(product);
+        return new ProductDTO(product);
     }
 
     @Transactional(readOnly = true)
@@ -39,20 +39,20 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDto insert(ProductDto dto){
+    public ProductDTO insert(ProductDTO dto){
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
-        return new ProductDto(entity);
+        return new ProductDTO(entity);
     }
 
     @Transactional
-    public ProductDto update(Long id, ProductDto dto){
+    public ProductDTO update(Long id, ProductDTO dto){
         try {
             Product entity = repository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
-            return new ProductDto(entity);
+            return new ProductDTO(entity);
         }
         catch (EntityNotFoundException e){
             throw new  ResourceNotFoundException("Recurso não encontrado");
@@ -72,7 +72,7 @@ public class ProductService {
         }
     }
 
-    private void copyDtoToEntity(ProductDto dto, Product entity) {
+    private void copyDtoToEntity(ProductDTO dto, Product entity) {
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
