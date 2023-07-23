@@ -1,11 +1,5 @@
 package com.devsuperior.DSCommerce.services;
 
-import com.devsuperior.DSCommerce.dto.ProductDto;
-import com.devsuperior.DSCommerce.entities.Product;
-import com.devsuperior.DSCommerce.repositories.ProductRepository;
-import com.devsuperior.DSCommerce.services.exceptions.DatabaseException;
-import com.devsuperior.DSCommerce.services.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -13,6 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.devsuperior.DSCommerce.dto.ProductDto;
+import com.devsuperior.DSCommerce.dto.ProductMinDto;
+import com.devsuperior.DSCommerce.entities.Product;
+import com.devsuperior.DSCommerce.repositories.ProductRepository;
+import com.devsuperior.DSCommerce.services.exceptions.DatabaseException;
+import com.devsuperior.DSCommerce.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ProductService {
@@ -28,9 +31,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDto> findAll(String name, Pageable pageable){
+    public Page<ProductMinDto> findAll(String name, Pageable pageable){
         Page<Product> result = repository.searchByName(name, pageable);
-        return result.map(x -> new ProductDto(x));
+        return result.map(x -> new ProductMinDto(x));
     }
 
     @Transactional
